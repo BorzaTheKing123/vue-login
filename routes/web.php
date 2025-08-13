@@ -8,3 +8,6 @@ use App\Http\Controllers\UserControllers\RegisterController;
 Route::get('/', [SessionController::class, 'show']);
 Route::get('/login', [LoginController::class, 'edit']);
 Route::get('/register', [RegisterController::class, 'show']);
+
+Route::post('/register', [RegisterController::class, 'store']);
+Route::post('/login', [RegisterController::class, 'update']);
