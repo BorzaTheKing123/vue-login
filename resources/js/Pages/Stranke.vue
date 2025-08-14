@@ -13,7 +13,7 @@ const goToAddCustomer = () => {
 </script>
 
 <template>
-  <div class="container">
+  <div class="napis">
     <h1>Seznam strank</h1>
     <table>
       <thead>
@@ -40,7 +40,7 @@ const goToAddCustomer = () => {
 </template>
 
 <style scoped>
-.container {
+.napis {
   max-width: 800px;
   margin: auto;
 }

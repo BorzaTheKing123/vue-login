@@ -24,7 +24,7 @@ const addCustomer = async () => {
 </script>
 
 <template>
-  <div class="form-container">
+  <div class="napis">
     <h1>Dodaj stranko</h1>
     <input v-model="ime" type="text" placeholder="Ime" />
     <input v-model="priimek" type="text" placeholder="Priimek" />
@@ -36,7 +36,7 @@ const addCustomer = async () => {
 </template>
 
 <style scoped>
-.form-container {
+.napis {
   max-width: 300px;
   margin: auto;
   display: flex;

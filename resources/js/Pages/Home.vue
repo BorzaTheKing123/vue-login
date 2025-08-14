@@ -1,11 +1,13 @@
-
 <script setup lang="ts">
-import { Inertia } from "@inertiajs/inertia"
 import ButtonComponent from '../buttonComponent.vue'
 
-// Funkcije za preusmeritev
-const goToRegister = () => Inertia.visit('/register')
-const goToLogin = () => Inertia.visit('/login')
+const goToRegister = () => {
+  window.location.href = '/register'
+}
+
+const goToLogin = () => {
+  window.location.href = '/login'
+}
 </script>
 
 <template>
@@ -26,7 +28,7 @@ const goToLogin = () => Inertia.visit('/login')
   gap: 10px;
 }
 .napis {
-    margin: auto;
-    gap: 100px
+  margin: auto;
+  gap: 100px;
 }
 </style>
