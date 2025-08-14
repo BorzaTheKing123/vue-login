@@ -20,6 +20,6 @@ class StoreNewUserJob
     public function handle()
     {
         User::create($this->credentials);
-        return Inertia::render('Dashboard');
+        return Inertia::render('Stranke');
     }
 }
