@@ -1,27 +1,21 @@
-<script setup lang="ts">
-import { Inertia } from '@inertiajs/inertia'
-import ButtonComponent from '../buttonComponent.vue'
-//const router = useRouter()
-
-// Funkcije za preusmeritev
-const goToRegister = () => {
-  Inertia.visit('/register')  // URL v Laravel route
-}
-
-const goToLogin = () => {
-  Inertia.visit('/login')
-}
-</script>
 
 <template>
   <div class="options">
-    <h1>Register</h1>
-    <ButtonComponent text="Registriraj se" :onClick="goToRegister" />
-    <h1>Login</h1>
-    <ButtonComponent text="Logiraj se" :onClick="goToLogin" />
+    <h1 class="napis">Register</h1>
+    <ButtonComponent @click="goToRegister" text="Registriraj se" />
+    <h1 class="napis">Login</h1>
+    <ButtonComponent @click="goToLogin" text="Logiraj se" />
   </div>
 </template>
 
+<script setup lang="ts">
+import { Inertia } from "@inertiajs/inertia"
+import ButtonComponent from '../buttonComponent.vue'
+
+// Funkcije za preusmeritev
+const goToRegister = () => Inertia.visit('/register')
+const goToLogin = () => Inertia.visit('/login')
+</script>
 <style scoped>
 .options {
   max-width: 300px;
@@ -29,5 +23,9 @@ const goToLogin = () => {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+.napis {
+    margin: auto;
+    gap: 100px
 }
 </style>

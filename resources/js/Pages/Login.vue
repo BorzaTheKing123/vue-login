@@ -4,14 +4,12 @@ import axios from 'axios'
 import InputComponent from '../inputComponent.vue'
 import ButtonComponent from '../buttonComponent.vue'
 
-const name = ref('')
 const email = ref('')
 const password = ref('')
 
 const submitForm = async () => {
   try {
-    const res = await axios.post("/register", {
-      name: name.value,
+    const res = await axios.post("/login", {
       email: email.value,
       password: password.value,
     })
@@ -24,18 +22,16 @@ const submitForm = async () => {
 
 
 <template>
-  <div class="register">
-    <h1>Registracija</h1>
-    <InputComponent v-model="name" namen="name"></InputComponent>
-    
+  <div class="login">
+    <h1>Login</h1>
     <InputComponent v-model="email" namen="email"></InputComponent>
     <InputComponent v-model="password" namen="password"></InputComponent>
-    <ButtonComponent text="Registriraj se" @click="submitForm"></ButtonComponent>
+    <ButtonComponent text="Logiraj se" @click="submitForm"></ButtonComponent>
   </div>
 </template>
  
 <style scoped>
-.register {
+.login {
   max-width: 300px;
   margin: auto;
   display: flex;
