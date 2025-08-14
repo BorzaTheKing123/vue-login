@@ -19,7 +19,8 @@ class StoreNewUserJob
      */
     public function handle()
     {
+        dd("hi");
         User::create($this->credentials);
-        return Inertia::render('Stranke');
+        return Inertia::render('Home');
     }
 }

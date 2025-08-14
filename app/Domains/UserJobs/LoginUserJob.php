@@ -23,7 +23,7 @@ class LoginUserJob
         ]);
  
         if (Auth::attempt($credentials)) {
-            $this->request->session()->regenerate(); 
+            $this->request->session()->regenerate();
             return Inertia::render('Stranke');
         }
  
