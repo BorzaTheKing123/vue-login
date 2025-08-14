@@ -1,4 +1,13 @@
 
+<script setup lang="ts">
+import { Inertia } from "@inertiajs/inertia"
+import ButtonComponent from '../buttonComponent.vue'
+
+// Funkcije za preusmeritev
+const goToRegister = () => Inertia.visit('/register')
+const goToLogin = () => Inertia.visit('/login')
+</script>
+
 <template>
   <div class="options">
     <h1 class="napis">Register</h1>
@@ -8,14 +17,6 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { Inertia } from "@inertiajs/inertia"
-import ButtonComponent from '../buttonComponent.vue'
-
-// Funkcije za preusmeritev
-const goToRegister = () => Inertia.visit('/register')
-const goToLogin = () => Inertia.visit('/login')
-</script>
 <style scoped>
 .options {
   max-width: 300px;

@@ -27,7 +27,6 @@ const submitForm = async () => {
   <div class="register">
     <h1>Registracija</h1>
     <InputComponent v-model="name" namen="name"></InputComponent>
-    
     <InputComponent v-model="email" namen="email"></InputComponent>
     <InputComponent v-model="password" namen="password"></InputComponent>
     <ButtonComponent text="Registriraj se" @click="submitForm"></ButtonComponent>
@@ -46,7 +45,7 @@ button {
   padding: 8px;
   background-color: #4CAF50;
   border: none;
-  color: white;
+  color: rgb(248, 243, 243);
   border-radius: 5px;
   cursor: pointer;
 }
