@@ -5,13 +5,13 @@ namespace App\Http\Controllers\UserControllers;
 use App\Features\UserFeatures\RegisterUserFeature;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Features\UserFeatures\ShowRegisterFormFeature;
+use Inertia\Inertia;
 
 class RegisterController extends Controller
 {
-    public function show()
+    public function create()
     {
-        return new ShowRegisterFormFeature()->handle();
+        return Inertia::render('Register');
     }
 
     public function store(Request $request)

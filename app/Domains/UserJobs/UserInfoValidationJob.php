@@ -2,9 +2,6 @@
 
 namespace App\Domains\UserJobs;
 
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Password;
-
 class UserInfoValidationJob
 {
 
@@ -15,13 +12,13 @@ class UserInfoValidationJob
 
     }
 
-    public function handle(): RedirectResponse
+    public function handle()
     {
         $credentials = $this->request->validate([
-            'username' => ['required', 'string', 'alpha_dash', 'min:3', 'max:255', 'unique:users,username'],
+            'name' => ['required', 'string', 'alpha_dash', 'min:3', 'max:255', 'unique:users,username'],
             'email'    => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'confirmed', Password::defaults()] // Uporabi laravelove password defaults,
-            //torej 8 dolžina, ena velika in vsaj ena mala črka, znak in številka
+            'password' => ['required', 'string', 'min:8', 'regex:/[a-z]/', 'regex:/[A-Z]/', 'regex:/[0-9]/', 
+            'regex:/[@$!%*#?&]/',]
         ]);
 
         return $credentials;

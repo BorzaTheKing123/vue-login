@@ -4,26 +4,19 @@ namespace App\Http\Controllers\UserControllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
+use App\Features\UserFeatures\LoginUserFeature;
 
 class LoginController extends Controller
 {
-	public function authenticate(Request $request): RedirectResponse
+
+    public function edit()
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
- 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
- 
-            return redirect()->intended('dashboard');
-        }
- 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+        return Inertia::render('Login');
+    }
+
+	public function login(Request $request)
+    {
+        return new LoginUserFeature($request)->handle();
     }
 }
