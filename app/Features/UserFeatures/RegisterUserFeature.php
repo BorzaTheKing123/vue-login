@@ -3,6 +3,7 @@
 namespace App\Features\UserFeatures;
 
 use App\Domains\UserJobs\StoreNewUserJob;
+use App\Domains\UserJobs\UserInfoValidationJob;
 
 class RegisterUserFeature
 {
@@ -12,8 +13,7 @@ class RegisterUserFeature
     }
     public function handle()
     {
-        // Validation
-        // Store
-        return new StoreNewUserJob($this->request)->handle();
+        $credentials = new UserInfoValidationJob($this->request)->handle();
+        return new StoreNewUserJob($credentials)->handle();
     }
 }

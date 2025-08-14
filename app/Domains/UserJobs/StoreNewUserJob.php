@@ -7,15 +7,7 @@ use Inertia\Inertia;
 
 class StoreNewUserJob
 {
-
-    protected $userData;
-
-    /**
-     * Create a new job instance.
-     *
-     * @param array $userData
-     */
-    public function __construct(private $request)
+    public function __construct(private $credentials)
     {
         
     }
@@ -27,7 +19,7 @@ class StoreNewUserJob
      */
     public function handle()
     {
-        User::create($this->request);
+        User::create($this->credentials);
         return Inertia::render('Dashboard');
     }
 }

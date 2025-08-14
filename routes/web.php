@@ -11,3 +11,5 @@ Route::get('/register', [RegisterController::class, 'show']);
 
 Route::post('/register', [RegisterController::class, 'store']);
 Route::post('/login', [RegisterController::class, 'update']);
+
+Route::get('/{id}/dashboard', [SessionController::class, 'show'])->middleware('auth');
