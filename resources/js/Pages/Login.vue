@@ -13,13 +13,18 @@ const submitForm = async () => {
     const res = await axios.post("/login", {
       email: email.value,
       password: password.value,
-    })
-    console.log(res.data)
-  } catch (err) {
-    console.error(err)
-  }
-}
+    });
 
+    console.log(res.data); // To je v redu za preverjanje
+
+    // PREUSMERITEV: To se zgodi samo, če je bila prijava uspešna.
+    window.location.href = `/${res.data.id}/stranke`;
+
+  } catch (err) {
+    console.error(err);
+    // Tukaj lahko uporabniku prikažete napako
+  }
+};
 </script>
 
 
