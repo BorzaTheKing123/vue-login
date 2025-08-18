@@ -14,7 +14,8 @@ class SessionController extends Controller
     }
 
     public function index(Int $id)
-    {
+    {   
+        //return $id;
         return new ShowYourClientsFeature($id)->handle();
     }
 }

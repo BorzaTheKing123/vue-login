@@ -7,7 +7,6 @@ use App\Http\Controllers\UserControllers\RegisterController;
 use App\Http\Controllers\StrankeController;
 
 Route::get('/', [SessionController::class, 'show']);
-Route::get('/stranke/{id}');
 
 Route::get('/login', [LoginController::class, 'edit'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);

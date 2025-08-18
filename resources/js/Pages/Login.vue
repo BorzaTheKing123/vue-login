@@ -10,13 +10,25 @@ const password = ref('')
 
 const submitForm = async () => {
   try {
-    const res = await axios.post("/login", {
+    // 'await' počaka, da se axios klic konča
+    const response = await axios.post("/login", {
       email: email.value,
       password: password.value,
-    })
-    console.log(res.data)
+    });
+
+    // Ta koda se izvede samo, če je bila prijava uspešna
+    console.log("Prijava uspešna!", response.data);
+    window.location.href = `${response.data}/stranke`; // Preusmeri
+
   } catch (err) {
-    console.error(err)
+    // 'catch' blok se zdaj pravilno izvede, če pride do napake
+    console.error("Napaka pri prijavi:", err.response.data);
+    
+    // Pokaži sporočilo o napaki uporabniku
+    const errorElement = document.getElementById('error-message');
+    if (errorElement) {
+        errorElement.textContent = 'Napačno uporabniško ime ali geslo.';
+    }
   }
 }
 

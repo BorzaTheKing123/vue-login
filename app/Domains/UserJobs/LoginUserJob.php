@@ -24,8 +24,9 @@ class LoginUserJob
  
         if (Auth::attempt($credentials)) {
             $this->request->session()->regenerate();
-            return redirect()->route('stranke.index', ['id' => Auth::id()]);
+            //redirect()->route('stranke.index', ['id' => Auth::id()]);
             //return Inertia::render('Stranke');
+            return Auth::id();
         }
  
         return back()->withErrors([

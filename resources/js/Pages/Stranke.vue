@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Inertia } from "@inertiajs/inertia"
 import ButtonComponent from '../buttonComponent.vue'
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
@@ -20,6 +19,7 @@ const error = ref<string | null>(null) // napaka, če pride do nje
 
 // GET request ob mountu
 onMounted(() => {
+  console.log(props.id);
   const url = `/${props.id}/stranke`
   console.log(`Pošiljam GET zahtevek na: ${url}`)
 
@@ -35,11 +35,6 @@ onMounted(() => {
       isLoading.value = false
     })
 })
-
-// Funkcija za gumb "Dodaj stranko"
-const goToAddCustomer = () => {
-  Inertia.visit(`/${props.id}/stranke/dodaj`)
-}
 </script>
 
 <template>
@@ -73,7 +68,7 @@ const goToAddCustomer = () => {
     </div>
 
     <div class="actions-container">
-      <ButtonComponent text="DODAJ STRANKE" @click="goToAddCustomer"></ButtonComponent>
+      <ButtonComponent text="DODAJ STRANKE"></ButtonComponent>
     </div>
   </div>
 </template>
