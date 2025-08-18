@@ -35,6 +35,10 @@ onMounted(() => {
       isLoading.value = false
     })
 })
+const dodajStranko = () => {
+  window.location.href = `${window.location.pathname}/dodaj`
+}
+
 </script>
 
 <template>
@@ -68,7 +72,7 @@ onMounted(() => {
     </div>
 
     <div class="actions-container">
-      <ButtonComponent text="DODAJ STRANKE"></ButtonComponent>
+      <ButtonComponent text="DODAJ STRANKE" @click="dodajStranko"></ButtonComponent>
     </div>
   </div>
 </template>
