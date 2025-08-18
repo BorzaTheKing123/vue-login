@@ -19,7 +19,10 @@ const submitForm = async () => {
   } catch (err) {
     console.error(err)
   }
+  
+  window.location.href = '/login'
 }
+
 </script>
 
 
