@@ -4,6 +4,7 @@ namespace App\Domains\UserJobs;
 
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ShowYourClientsJob
 {
@@ -21,7 +22,8 @@ class ShowYourClientsJob
     {
         if ($this->id === Auth::id())
         {
-            return Inertia::render('Stranke', ['id' => $this->id]);
+            $stranke = DB::table('stranke')->get()->where('user_id', (string) $this->id);
+            return Inertia::render('Stranke', [$stranke]);
             // Tukaj je koda za pridobivanje strank Stranka::findAll($id)
         }
     }
