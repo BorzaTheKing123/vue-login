@@ -8,6 +8,10 @@ const name = ref('')
 const email = ref('')
 const password = ref('')
 
+// reaktivna spremenljivka za izpis napake
+const izpis = ref(false)
+const napaka = ref('') // tu bomo shranili sporočilo napake
+
 const submitForm = async () => {
   try {
     const res = await axios.post("/register", {
@@ -15,16 +19,22 @@ const submitForm = async () => {
       email: email.value,
       password: password.value,
     })
-    console.log(res.data)
+    if (res.data == true){
+      window.location.href = '/login'
+      izpis.value = true
+    } else {
+      napaka.value = res.data
+      izpis.value = true
+      console.log(napaka)
+    }
+      
   } catch (err) {
-    console.error(err)
+   // console.error(err)
+    napaka.value = "Prišlo je do napake pri registraciji."
+    izpis.value = true
   }
-  
-  window.location.href = '/login'
 }
-
 </script>
-
 
 <template>
   <div class="register">
@@ -33,9 +43,14 @@ const submitForm = async () => {
     <InputComponent v-model="email" namen="email"></InputComponent>
     <InputComponent v-model="password" namen="password"></InputComponent>
     <ButtonComponent text="Registriraj se" @click="submitForm"></ButtonComponent>
+
+    <!-- izpišemo napako, če obstaja -->
+    <p v-if="izpis">{{ napaka }}</p>
   </div>
 </template>
- 
+
+
+  
 <style scoped>
 .register {
   max-width: 300px;
