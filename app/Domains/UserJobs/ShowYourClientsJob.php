@@ -23,7 +23,7 @@ class ShowYourClientsJob
         if ($this->id === Auth::id())
         {
             $stranke = DB::table('stranke')->get()->where('user_id', (string) $this->id);
-            return Inertia::render('Stranke', [$stranke]);
+            return Inertia::render('Stranke', ['id' => $this->id, 'stranke' => $stranke]);
             // Tukaj je koda za pridobivanje strank Stranka::findAll($id)
         }
     }

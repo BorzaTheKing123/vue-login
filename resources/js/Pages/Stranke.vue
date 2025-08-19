@@ -8,6 +8,10 @@ const props = defineProps({
   id: {
     type: [Number, String], // Tip je lahko število ali niz
     required: true
+  },
+  stranke: {
+    type: Array as () => Customer[], // Ta del specificira da bodo oblike kot je Customer
+    default: () => [] // <--- The fix: provide a default empty array
   }
 })
 
@@ -32,10 +36,11 @@ const selectedCustomer = ref<Customer | null>(null) // Hrani podatke o izbrani s
 onMounted(() => {
   const url = `/${props.id}/stranke`
   console.log(`Pošiljam GET zahtevek na: ${url}`)
+  console.log(props.stranke)
 
   axios.get(url)
     .then(response => {
-      customers.value = response.data.filter((c: any) => c && c.id)
+      customers.value = props.stranke//response.data.filter((c: any) => c && c.id)
     })
     .catch(err => {
       console.error("Prišlo je do napake:", err)
@@ -103,7 +108,6 @@ const izbrisiStranko = () => {
         <thead>
           <tr>
             <th>Ime</th>
-            <th>Priimek</th>
             <th>Email</th>
             <th>Telefon</th>
             <th>Dejavnost</th>
