@@ -101,19 +101,10 @@ const dodajStranko = () => {
     </div>
   </div>
 
-  <div v-if="isModalVisible" class="modal-overlay" @click.self="closeModal">
-    <div class="modal-content">
-      <h3 v-if="selectedCustomer">
-        Kaj želite storiti s stranko <br>
-        <strong>{{ selectedCustomer.name }} </strong>?
-      </h3>
-    </div>
-  </div>
 </template>
 
 
 <style scoped>
-
 .napis {
   max-width: 900px;
   margin: 40px auto;
@@ -175,42 +166,11 @@ td {
   vertical-align: middle;
 }
 
-/* ----- Sporočilo, ko ni strank ----- */
-.empty-state {
-  text-align: center;
-  padding: 3rem;
-  background-color: #f7fafc;
-  border-radius: 8px;
-  border: 1px dashed #cbd5e0;
-  color: #718096;
-  margin: 1rem 0 2rem 0;
-}
-
 /* ----- Gumb in Akcije ----- */
 .actions-container {
   display: flex;
-  justify-content: flex-end; /* Gumb poravna na desno */
+  justify-content: flex-end;
   margin-top: 2rem;
-}
-
-/* Stil za Link komponento, da bo izgledala kot gumb */
-a {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  background-color: #4a5568;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out, transform 0.1s ease;
-}
-
-a:hover {
-  background-color: #2d3748;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .clickable-row {
@@ -218,6 +178,6 @@ a:hover {
 }
 
 .clickable-row:hover {
-  background-color: #edf2f7; /* malo bolj temen hover */
+  background-color: #edf2f7;
 }
 </style>

@@ -43,7 +43,7 @@ const updateCustomer = async () => {
   error.value = null
 
   try {
-    await axios.put(`/${props.id}/stranke/${customerId.value}`, {
+    await axios.put(`/${props.id}/stranke/${name.value}`, {
       name: name.value,
       email: email.value,
       phone: phone.value,
@@ -63,7 +63,7 @@ const deleteCustomer = async () => {
 
   if (confirm(`Ali res želite izbrisati stranko ${name.value}?`)) {
     try {
-      await axios.delete(`/${props.id}/stranke/${customerId.value}`)
+      await axios.delete(`/${props.id}/stranke/${name.value}`)
       alert('Stranka je bila uspešno izbrisana!')
       window.location.href = `/${props.id}/stranke`
     } catch (err) {
