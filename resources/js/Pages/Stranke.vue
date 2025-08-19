@@ -14,6 +14,9 @@ const props = defineProps({
     default: () => [] // <--- The fix: provide a default empty array
   }
 })
+const pojdiNaUrejanje = (customer: Customer) => {
+  window.location.href = `/${props.id}/stranke/${customer.name}`
+}
 
 // Tip za stranko za boljšo preglednost kode
 interface Customer {
@@ -40,7 +43,7 @@ onMounted(() => {
 
   axios.get(url)
     .then(response => {
-      customers.value = props.stranke//response.data.filter((c: any) => c && c.id)
+      customers.value = props.stranke
     })
     .catch(err => {
       console.error("Prišlo je do napake:", err)
@@ -55,48 +58,7 @@ const dodajStranko = () => {
   window.location.href = `${window.location.pathname}/dodaj`
 }
 
-// --- NOVE FUNKCIJE ZA MODALNO OKNO ---
 
-// Odpre modalno okno in nastavi izbrano stranko
-const openActionsModal = (customer: Customer) => {
-  selectedCustomer.value = customer
-  isModalVisible.value = true
-}
-
-// Zapre modalno okno
-const closeModal = () => {
-  isModalVisible.value = false
-  selectedCustomer.value = null
-}
-
-// Preusmeri na stran za urejanje stranke
-const urediStranko = () => {
-  if (!selectedCustomer.value) return
-  // Predpostavljamo, da je pot za urejanje '/{id}/stranke/{customerId}/uredi'
-  window.location.href = `/${props.id}/stranke/${selectedCustomer.value.id}/uredi`
-}
-
-// Izbriše izbrano stranko
-const izbrisiStranko = () => {
-  if (!selectedCustomer.value) return
-  
-  // Potrditveno okno pred brisanjem
-  if (confirm(`Ali ste prepričani, da želite izbrisati stranko ${selectedCustomer.value.name}?`)) {
-    const customerId = selectedCustomer.value.id
-    const url = `/${props.id}/stranke/${customerId}`
-
-    axios.delete(url)
-      .then(() => {
-        // Uspešno izbrisano - odstrani stranko iz lokalnega seznama
-        customers.value = customers.value.filter(c => c.id !== customerId)
-        closeModal() // Zapri modalno okno po uspešnem brisanju
-      })
-      .catch(err => {
-        console.error("Napaka pri brisanju:", err)
-        alert("Prišlo je do napake pri brisanju stranke.")
-      })
-  }
-}
 </script>
 
 <template>
@@ -117,9 +79,8 @@ const izbrisiStranko = () => {
           <tr 
             v-for="customer in customers" 
             :key="customer.id" 
-            @click="openActionsModal(customer)" 
-            class="clickable-row"
-          >
+            @click="pojdiNaUrejanje(customer)" 
+            class="clickable-row">
             <td>{{ customer.name }}</td>
             <td>{{ customer.email }}</td>
             <td>{{ customer.phone }}</td>
@@ -146,11 +107,6 @@ const izbrisiStranko = () => {
         Kaj želite storiti s stranko <br>
         <strong>{{ selectedCustomer.name }} </strong>?
       </h3>
-      <div class="modal-actions">
-        <ButtonComponent text="UREDI" @click="urediStranko" class="edit-btn"></ButtonComponent>
-        <ButtonComponent text="IZBRIŠI" @click="izbrisiStranko" class="delete-btn"></ButtonComponent>
-        <ButtonComponent text="Prekliči" @click="closeModal" class="cancel-btn"></ButtonComponent>
-      </div>
     </div>
   </div>
 </template>
@@ -255,5 +211,13 @@ a:hover {
   background-color: #2d3748;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.clickable-row {
+  cursor: pointer;
+}
+
+.clickable-row:hover {
+  background-color: #edf2f7; /* malo bolj temen hover */
 }
 </style>
