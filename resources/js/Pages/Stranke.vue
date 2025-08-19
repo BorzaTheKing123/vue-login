@@ -11,10 +11,22 @@ const props = defineProps({
   }
 })
 
-// Reaktivne spremenljivke
-const customers = ref<any[]>([])  // seznam strank
-const isLoading = ref(true)       // status nalaganja
-const error = ref<string | null>(null) // napaka, če pride do nje
+// Tip za stranko za boljšo preglednost kode
+interface Customer {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  dejavnost: string;
+}
+
+// --- NOVE REAKTIVNE SPREMENLJIVKE ---
+const customers = ref<Customer[]>([])      // Seznam strank z uporabo vmesnika Customer
+const isLoading = ref(true)               // Status nalaganja
+const error = ref<string | null>(null)    // Napaka, če pride do nje
+
+const isModalVisible = ref(false)         // Pokaže ali skrije modalno okno
+const selectedCustomer = ref<Customer | null>(null) // Hrani podatke o izbrani stranki
 
 // GET request ob mountu
 onMounted(() => {
@@ -23,7 +35,6 @@ onMounted(() => {
 
   axios.get(url)
     .then(response => {
-      // Shrani samo veljavne stranke (odstrani prazne zapise)
       customers.value = response.data.filter((c: any) => c && c.id)
     })
     .catch(err => {
@@ -37,6 +48,49 @@ onMounted(() => {
 
 const dodajStranko = () => {
   window.location.href = `${window.location.pathname}/dodaj`
+}
+
+// --- NOVE FUNKCIJE ZA MODALNO OKNO ---
+
+// Odpre modalno okno in nastavi izbrano stranko
+const openActionsModal = (customer: Customer) => {
+  selectedCustomer.value = customer
+  isModalVisible.value = true
+}
+
+// Zapre modalno okno
+const closeModal = () => {
+  isModalVisible.value = false
+  selectedCustomer.value = null
+}
+
+// Preusmeri na stran za urejanje stranke
+const urediStranko = () => {
+  if (!selectedCustomer.value) return
+  // Predpostavljamo, da je pot za urejanje '/{id}/stranke/{customerId}/uredi'
+  window.location.href = `/${props.id}/stranke/${selectedCustomer.value.id}/uredi`
+}
+
+// Izbriše izbrano stranko
+const izbrisiStranko = () => {
+  if (!selectedCustomer.value) return
+
+  // Potrditveno okno pred brisanjem
+  if (confirm(`Ali ste prepričani, da želite izbrisati stranko ${selectedCustomer.value.name}?`)) {
+    const customerId = selectedCustomer.value.id
+    const url = `/${props.id}/stranke/${customerId}`
+
+    axios.delete(url)
+      .then(() => {
+        // Uspešno izbrisano - odstrani stranko iz lokalnega seznama
+        customers.value = customers.value.filter(c => c.id !== customerId)
+        closeModal() // Zapri modalno okno po uspešnem brisanju
+      })
+      .catch(err => {
+        console.error("Napaka pri brisanju:", err)
+        alert("Prišlo je do napake pri brisanju stranke.")
+      })
+  }
 }
 </script>
 
@@ -56,11 +110,15 @@ const dodajStranko = () => {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="customer in customers" :key="customer.id">
-            <td>{{ customer.ime }}</td>
-            <td>{{ customer.priimek }}</td>
+          <tr 
+            v-for="customer in customers" 
+            :key="customer.id" 
+            @click="openActionsModal(customer)" 
+            class="clickable-row"
+          >
+            <td>{{ customer.name }}</td>
             <td>{{ customer.email }}</td>
-            <td>{{ customer.telefonska_stevilka }}</td>
+            <td>{{ customer.phone }}</td>
             <td>{{ customer.dejavnost }}</td>
           </tr>
         </tbody>
@@ -77,7 +135,22 @@ const dodajStranko = () => {
       <ButtonComponent text="DODAJ STRANKE" @click="dodajStranko"></ButtonComponent>
     </div>
   </div>
+
+  <div v-if="isModalVisible" class="modal-overlay" @click.self="closeModal">
+    <div class="modal-content">
+      <h3 v-if="selectedCustomer">
+        Kaj želite storiti s stranko <br>
+        <strong>{{ selectedCustomer.name }} </strong>?
+      </h3>
+      <div class="modal-actions">
+        <ButtonComponent text="UREDI" @click="urediStranko" class="edit-btn"></ButtonComponent>
+        <ButtonComponent text="IZBRIŠI" @click="izbrisiStranko" class="delete-btn"></ButtonComponent>
+        <ButtonComponent text="Prekliči" @click="closeModal" class="cancel-btn"></ButtonComponent>
+      </div>
+    </div>
+  </div>
 </template>
+
 
 <style scoped>
 
