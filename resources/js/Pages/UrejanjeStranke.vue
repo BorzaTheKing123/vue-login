@@ -5,9 +5,23 @@ import ButtonComponent from '../buttonComponent.vue'
 
 // Props od Inertia/Laravel strani
 const props = defineProps({
-  id: { type: [Number, String], required: true },
-  name: { type: String, required: true },   // ime stranke iz URL
+  //id: { type: [Number, String], required: true },
+  //name: { type: String, required: true },   // ime stranke iz URL
+  stranka: {
+    type: Object as () => Customer[], // Ta del specificira da bodo oblike kot je Customer
+    default: () => [] // <--- The fix: provide a default empty array
+    }
 })
+
+interface Customer {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  dejavnost: string;
+}
+
+const customer = ref<Customer[]>([])
 
 // reaktivna polja
 const customerId = ref<number | null>(null)
@@ -21,14 +35,15 @@ const isLoading = ref(true)
 // --- Naložimo obstoječo stranko ob mountu ---
 onMounted(async () => {
   try {
-    const res = await axios.get(`/${props.id}/stranke/${props.name}`)
-    const customer = res.data
+    //const res = await axios.get(`/${props.id}/stranke/${props.name}`)
+    customer.value = props.stranka
+    console.log(customer.value)
 
-    customerId.value = customer.id
-    name.value = customer.name
-    email.value = customer.email
-    phone.value = customer.phone
-    dejavnost.value = customer.dejavnost
+    customerId.value = customer.value.id
+    name.value = customer.value.name
+    email.value = customer.value.email
+    phone.value = customer.value.phone
+    dejavnost.value = customer.value.dejavnost
   } catch (err) {
     console.error("Napaka pri nalaganju stranke:", err)
     error.value = "Ni bilo mogoče naložiti podatkov o stranki."

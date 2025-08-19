@@ -18,7 +18,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/{id}/stranke', [SessionController::class, 'index'])->name('stranke.index');
     Route::get('/{id}/stranke/dodaj', [StrankeController::class, 'create']);
     Route::post('/{id}/stranke/dodaj', [StrankeController::class, 'store']);
-    Route::get('/{id}/stranke/{id_stranke}/uredi', [StrankeController::class, 'edit'])->can('edit', 'id_stranke');
-    Route::put('/{id}/stranke/{id_stranke}/uredi', [StrankeController::class, 'update']);
-    Route::delete('/{id}/stranke/{id_stranke}/edit', [StrankeController::class, 'destroy']);
+    Route::get('/{id}/stranke/{stranka}', [StrankeController::class, 'edit']);
+    Route::put('/{id}/stranke/{id_stranke}', [StrankeController::class, 'update']);
+    Route::delete('/{id}/stranke/{id_stranke}', [StrankeController::class, 'destroy']);
 });
