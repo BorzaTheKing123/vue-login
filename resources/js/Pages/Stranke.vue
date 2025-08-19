@@ -74,7 +74,7 @@ const urediStranko = () => {
 // Izbriše izbrano stranko
 const izbrisiStranko = () => {
   if (!selectedCustomer.value) return
-
+  
   // Potrditveno okno pred brisanjem
   if (confirm(`Ali ste prepričani, da želite izbrisati stranko ${selectedCustomer.value.name}?`)) {
     const customerId = selectedCustomer.value.id
