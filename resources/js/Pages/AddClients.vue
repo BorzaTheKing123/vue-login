@@ -31,7 +31,7 @@ const addCustomer = async () => {
     <input v-model="email" type="email" placeholder="Email" />
     <input v-model="telefonska_stevilka" type="text" placeholder="Telefonska številka" />
     <input v-model="dejavnost" type="text" placeholder="Dejavnost" />
-    <ButtonComponent text="Shrani" @click="addCustomer" />
+    <ButtonComponent text="Shrani" @click="addCustomer" ></ButtonComponent>
   </div>
 </template>
 

@@ -3,7 +3,6 @@ import ButtonComponent from '../buttonComponent.vue'
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 
-
 // Sprejem 'id' props-a, ki ga pošlje Laravel/Inertia
 const props = defineProps({
   id: {
@@ -19,13 +18,13 @@ const error = ref<string | null>(null) // napaka, če pride do nje
 
 // GET request ob mountu
 onMounted(() => {
-  console.log(props.id);
   const url = `/${props.id}/stranke`
   console.log(`Pošiljam GET zahtevek na: ${url}`)
 
   axios.get(url)
     .then(response => {
-      customers.value = response.data
+      // Shrani samo veljavne stranke (odstrani prazne zapise)
+      customers.value = response.data.filter((c: any) => c && c.id)
     })
     .catch(err => {
       console.error("Prišlo je do napake:", err)
@@ -35,10 +34,10 @@ onMounted(() => {
       isLoading.value = false
     })
 })
+
 const dodajStranko = () => {
   window.location.href = `${window.location.pathname}/dodaj`
 }
-
 </script>
 
 <template>
@@ -67,8 +66,11 @@ const dodajStranko = () => {
         </tbody>
       </table>
     </div>
-    <div v-else class="empty-state">
+    <div v-else-if="!isLoading">
       <p>Trenutno nimate dodanih strank.</p>
+    </div>
+    <div v-else>
+      <p>Nalaganje podatkov...</p>
     </div>
 
     <div class="actions-container">
