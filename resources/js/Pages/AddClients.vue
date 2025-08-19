@@ -10,7 +10,7 @@ const props = defineProps({
     required: true
   }
 })
-
+  
 const name = ref('')
 const email = ref('')
 const phone = ref('')
