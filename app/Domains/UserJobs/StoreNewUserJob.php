@@ -7,7 +7,7 @@ use Inertia\Inertia;
 
 class StoreNewUserJob
 {
-    public function __construct(private $credentials)
+    public function __construct(private $credentials, private $request)
     {
         
     }
@@ -20,6 +20,9 @@ class StoreNewUserJob
     public function handle()
     {
         User::create($this->credentials);
-        return Inertia::render('Login');
+        $this->request->session()->regenerate();
+
+        // Token za uporabnika iz njegovega uporabniškega imena itd
+        return true;
     }
 }
