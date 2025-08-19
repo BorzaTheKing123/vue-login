@@ -2,7 +2,6 @@
 // Vsa vaša obstoječa <script> koda ostane nespremenjena
 import { ref } from 'vue'
 import axios from 'axios'
-import { Inertia } from '@inertiajs/inertia'
 import ButtonComponent from '../buttonComponent.vue'
 
 const props = defineProps({
@@ -17,7 +16,6 @@ const email = ref('')
 const phone = ref('')
 const dejavnost = ref('')
 const error = ref<string | null>(null)
-const user_id = ref('')
 
 const addCustomer = async () => {
   error.value = null
@@ -28,9 +26,9 @@ const addCustomer = async () => {
   const url = `/${props.id}/stranke/dodaj`
   try {
     await axios.post(url, {
-      ime: name.value,
+      name: name.value,
       email: email.value,
-      telefonska_stevilka: phone.value,
+      phone: phone.value,
       dejavnost: dejavnost.value,
       user_id: props.id
     })
