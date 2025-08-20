@@ -50,10 +50,10 @@ const addCustomer = async () => {
     </div>
 
     <div class="form-group">
-      <input v-model="name" type="text" placeholder="Ime" />
-      <input v-model="email" type="email" placeholder="Email" />
-      <input v-model="phone" type="text" placeholder="Telefonska številka" />
-      <input v-model="dejavnost" type="text" placeholder="Dejavnost" />
+      <input v-model="name" type="text" placeholder="Ime:" />
+      <input v-model="email" type="email" placeholder="Email:" />
+      <input v-model="phone" type="text" placeholder="Telefonska številka:" />
+      <input v-model="dejavnost" type="text" placeholder="Dejavnost:" />
     </div>
     
     <ButtonComponent text="Shrani" @click="addCustomer" class="submit-btn"></ButtonComponent>

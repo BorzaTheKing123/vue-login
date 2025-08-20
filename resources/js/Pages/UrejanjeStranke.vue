@@ -90,6 +90,7 @@ const deleteCustomer = async () => {
     <div v-if="isLoading">Nalaganje...</div>
     <div v-else>
       <div v-if="error" class="error-message">{{ error }}</div>
+      <br>
 
       <div class="form-group">
         <input v-model="name" type="text" placeholder="Ime" />
@@ -120,7 +121,7 @@ const deleteCustomer = async () => {
   font-size: 1.8rem;
   font-weight: bold;
   margin-bottom: 1.5rem;
-  color: #1a202c;
+  color: #192f5c;
 }
 
 .form-group {

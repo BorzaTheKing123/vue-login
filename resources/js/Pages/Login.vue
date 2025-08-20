@@ -7,6 +7,8 @@ import ButtonComponent from '../buttonComponent.vue'
 
 const email = ref('')
 const password = ref('')
+const izpis = ref(false)
+const napaka = ref('') 
 
 const submitForm = async () => {
   try {
@@ -20,9 +22,17 @@ const submitForm = async () => {
     console.log("Prijava uspešna!", response.data);
     window.location.href = `${response.data}/stranke`; // Preusmeri
 
-  } catch (err) {
-    // 'catch' blok se zdaj pravilno izvede, če pride do napake
-    console.error("Napaka pri prijavi:", err.response.data);
+  }catch (err) {
+  console.error("Napaka pri prijavi:", err.response?.data);
+  napaka.value = "Napačno uporabniško ime ali geslo.";
+  izpis.value = true;
+  setTimeout(() => {
+  izpis.value = false;
+  napaka.value = '';
+}, 5000); 
+
+}
+
     
     // Pokaži sporočilo o napaki uporabniku
     const errorElement = document.getElementById('error-message');
@@ -30,7 +40,7 @@ const submitForm = async () => {
         errorElement.textContent = 'Napačno uporabniško ime ali geslo.';
     }
   }
-}
+
 
 </script>
 
@@ -38,9 +48,12 @@ const submitForm = async () => {
 <template>
   <div class="login">
     <h1>Login</h1>
+
+
     <InputComponent v-model="email" namen="email"></InputComponent>
     <InputComponent v-model="password" namen="password"></InputComponent>
     <ButtonComponent text="Logiraj se" @click="submitForm"></ButtonComponent>
+        <p v-if="izpis" class="error-message">{{ napaka }}</p>
   </div>
 </template>
  
