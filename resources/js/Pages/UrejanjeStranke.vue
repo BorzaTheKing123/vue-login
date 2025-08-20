@@ -4,15 +4,6 @@ import axios from 'axios'
 import ButtonComponent from '../buttonComponent.vue'
 
 // Props od Inertia/Laravel strani
-const props = defineProps({
-  //id: { type: [Number, String], required: true },
-  //name: { type: String, required: true },   // ime stranke iz URL
-  stranka: {
-    type: Object as () => Customer[], // Ta del specificira da bodo oblike kot je Customer
-    default: () => [] // <--- The fix: provide a default empty array
-    }
-})
-
 interface Customer {
   id: number;
   name: string;
@@ -21,7 +12,13 @@ interface Customer {
   dejavnost: string;
 }
 
-const customer = ref<Customer[]>([])
+const props = defineProps({
+  id: { type: [Number, String], required: true },
+  stranka: {
+    type: Object as () => Customer,
+    required: true
+  }
+})
 
 // reaktivna polja
 const customerId = ref<number | null>(null)
@@ -33,17 +30,13 @@ const error = ref<string | null>(null)
 const isLoading = ref(true)
 
 // --- Naložimo obstoječo stranko ob mountu ---
-onMounted(async () => {
+onMounted(() => {
   try {
-    //const res = await axios.get(`/${props.id}/stranke/${props.name}`)
-    customer.value = props.stranka
-    console.log(customer.value)
-
-    customerId.value = customer.value.id
-    name.value = customer.value.name
-    email.value = customer.value.email
-    phone.value = customer.value.phone
-    dejavnost.value = customer.value.dejavnost
+    customerId.value = props.stranka.id
+    name.value = props.stranka.name
+    email.value = props.stranka.email
+    phone.value = props.stranka.phone
+    dejavnost.value = props.stranka.dejavnost
   } catch (err) {
     console.error("Napaka pri nalaganju stranke:", err)
     error.value = "Ni bilo mogoče naložiti podatkov o stranki."
@@ -54,7 +47,7 @@ onMounted(async () => {
 
 // --- Posodobi obstoječo stranko ---
 const updateCustomer = async () => {
-  if (!customerId.value) return
+  if (!name.value) return
   error.value = null
 
   try {
@@ -74,7 +67,7 @@ const updateCustomer = async () => {
 
 // --- Izbriši stranko ---
 const deleteCustomer = async () => {
-  if (!customerId.value) return
+  if (!name.value) return
 
   if (confirm(`Ali res želite izbrisati stranko ${name.value}?`)) {
     try {
@@ -88,6 +81,7 @@ const deleteCustomer = async () => {
   }
 }
 </script>
+
 
 <template>
   <div class="form-card">
