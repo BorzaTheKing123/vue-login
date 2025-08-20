@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users');
             $table->string('name');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('phone');
             $table->text('dejavnost');
             $table->timestamps();

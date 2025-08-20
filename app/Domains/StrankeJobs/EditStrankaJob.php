@@ -20,7 +20,7 @@ class EditStrankaJob
      */
     public function handle()
     {
-        $info = DB::table('stranke')->where('name', $this->stranka)->where('user_id', Auth::id())->first();
+        $info = DB::table('stranke')->where('name', $this->stranka)->first();
         return Inertia::render('UrejanjeStranke', ['stranka' => $info, 'id' => Auth::id()]);
     }
 }

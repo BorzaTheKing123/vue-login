@@ -10,6 +10,7 @@ use App\Features\StrankeFeatures\StoreNewStrankaFeature;
 use App\Features\StrankeFeatures\ShowStrankeFeature;
 use App\Features\StrankeFeatures\UpdateStrankaFeature;
 use App\Features\StrankeFeatures\DeleteStrankaFeature;
+use Illuminate\Support\Facades\Log;
 
 class StrankeController extends Controller
 {
@@ -26,7 +27,8 @@ class StrankeController extends Controller
 
     public function store(Request $request)
     {
-        return new StoreNewStrankaFeature($request)->handle();
+        Log::info('Kličem handle() iz kontrolerja', ['line' => __LINE__]);
+        return (new StoreNewStrankaFeature($request))->handle();
     }
 
     public function edit(Int $id, String $stranka) // $id je samo zato da sprejme id od userja, ker sta podana 2 parametra

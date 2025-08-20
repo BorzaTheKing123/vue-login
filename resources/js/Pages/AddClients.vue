@@ -20,6 +20,7 @@ const izpis = ref(false)
 const napaka = ref('') 
 
 const addCustomer = async () => {
+  console.log("hi")
   error.value = null
   if (!name.value || !email.value) {
     error.value = "Polji Ime in Email sta obvezni."
@@ -27,13 +28,14 @@ const addCustomer = async () => {
   }
   const url = `/${props.id}/stranke/dodaj`
   try {
-    await axios.post(url, {
+    const res = await axios.post(url, {
       name: name.value,
       email: email.value,
       phone: phone.value,
       dejavnost: dejavnost.value,
       user_id: props.id
     })
+    console.log(res.data)
     window.location.href = `/${props.id}/stranke`;
     alert('Stranka je bila uspešno dodana!')
   } catch (err) {
@@ -56,13 +58,15 @@ const addCustomer = async () => {
     </div>
 
     <div class="form-group">
-      <input v-model="name" type="text" placeholder="Ime:" />
+      <input v-model="name" type="text" placeholder="Ime:"/>
       <input v-model="email" type="email" placeholder="Email:" />
       <input v-model="phone" type="text" placeholder="Telefonska številka:" />
       <input v-model="dejavnost" type="text" placeholder="Dejavnost:" />
     </div>
-    
-    <ButtonComponent text="Shrani" @click="addCustomer" class="submit-btn"></ButtonComponent>
+    <ButtonComponent 
+      text="Shrani" 
+      @click.stop.prevent="addCustomer" 
+      class="submit-btn"/>
   </div>
 </template>
 

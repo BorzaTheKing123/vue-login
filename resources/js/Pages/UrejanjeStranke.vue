@@ -6,6 +6,7 @@ import ButtonComponent from '../buttonComponent.vue'
 // Props od Inertia/Laravel strani
 interface Customer {
   id: number;
+  user_id: number;
   name: string;
   email: string;
   phone: string;
@@ -116,15 +117,15 @@ const deleteCustomer = async () => {
       <br>
 
       <div class="form-group">
-        <input v-model="name" type="text" placeholder="Ime" />
-        <input v-model="email" type="email" placeholder="Email" />
-        <input v-model="phone" type="text" placeholder="Telefon" />
-        <input v-model="dejavnost" type="text" placeholder="Dejavnost" />
+        <input v-model="name" type="text" placeholder="Ime" :disabled="id!=stranka.user_id" />
+        <input v-model="email" type="email" placeholder="Email" :disabled="id!=stranka.user_id" />
+        <input v-model="phone" type="text" placeholder="Telefon" :disabled="id!=stranka.user_id" />
+        <input v-model="dejavnost" type="text" placeholder="Dejavnost" :disabled="id!=stranka.user_id" />
       </div>
 
       <div class="actions">
-        <ButtonComponent text="Shrani spremembe" @click="updateCustomer" class="update-btn" />
-        <ButtonComponent text="Izbriši" @click="deleteCustomer" class="delete-btn" />
+        <ButtonComponent text="Shrani spremembe" @click="updateCustomer" class="update-btn" :disabled="id!=stranka.user_id" />
+        <ButtonComponent text="Izbriši" @click="deleteCustomer" class="delete-btn" :disabled="id!=stranka.user_id" />
       </div>
     </div>
   </div>
@@ -168,7 +169,7 @@ input {
   background: #249236;
   color: white;
 }
-.update-btn:hover {
+.update-btn:not(:disabled):hover {
   background-color: #0f6815;
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
@@ -178,7 +179,7 @@ input {
   background: #e53e3e;
   color: white;
 }
-.delete-btn:hover {
+.delete-btn:not(:disabled):hover {
   background-color: #b12929;
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);

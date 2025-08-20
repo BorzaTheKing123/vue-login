@@ -20,7 +20,7 @@ class ShowStrankeJob
      */
     public function handle()
     {
-        $stranke = DB::table('stranke')->where('user_id', Auth::id())->get();
+        $stranke = DB::table('stranke')->get();
         return Inertia::render('Stranke', ['id' => $this->id, 'stranke' => $stranke]);
     }
         
