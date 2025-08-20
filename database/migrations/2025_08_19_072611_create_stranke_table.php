@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('stranke', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users');
-            $table->string('name')->unique();
-            $table->string('email')->unique();
+            $table->string('name');
+            $table->string('email');
             $table->string('phone');
             $table->text('dejavnost');
             $table->timestamps();

@@ -6,9 +6,9 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class ShowStrankeJob
+class DeleteStrankaJob
 {
-    public function __construct(private $id)
+    public function __construct(private $stranka)
     {
         
     }
@@ -20,8 +20,7 @@ class ShowStrankeJob
      */
     public function handle()
     {
-        $stranke = DB::table('stranke')->where('user_id', Auth::id())->get();
-        return Inertia::render('Stranke', ['id' => $this->id, 'stranke' => $stranke]);
+        DB::table('stranke')->where('name', $this->stranka)->where('user_id', Auth::id())->delete();
+        return Inertia::render('Stranke', ['id' => Auth::id()]);
     }
-        
 }

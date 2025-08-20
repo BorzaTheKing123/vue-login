@@ -19,6 +19,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/{id}/stranke/dodaj', [StrankeController::class, 'create']);
     Route::post('/{id}/stranke/dodaj', [StrankeController::class, 'store']);
     Route::get('/{id}/stranke/{stranka}', [StrankeController::class, 'edit']);
-    Route::put('/{id}/stranke/{id_stranke}', [StrankeController::class, 'update']);
-    Route::delete('/{id}/stranke/{id_stranke}', [StrankeController::class, 'destroy']);
+    Route::put('/{id}/stranke/{stranka}', [StrankeController::class, 'update']);
+    Route::delete('/{id}/stranke/{stranka}', [StrankeController::class, 'destroy']);
 });

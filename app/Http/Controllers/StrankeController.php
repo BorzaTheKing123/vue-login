@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use App\Features\StrankeFeatures\StoreNewStrankaFeature;
 use App\Features\StrankeFeatures\ShowStrankeFeature;
 use App\Features\StrankeFeatures\UpdateStrankaFeature;
+use App\Features\StrankeFeatures\DeleteStrankaFeature;
 
 class StrankeController extends Controller
 {
@@ -33,8 +34,13 @@ class StrankeController extends Controller
         return new EditStrankaFeature($stranka)->handle();
     }
 
-    public function update(Request $request)
+    public function update(Int $id, String $stranka, Request $request)
     {
-        return new UpdateStrankaFeature($request)->handle();
+        return new UpdateStrankaFeature($stranka, $request)->handle();
+    }
+
+    public function destroy(Int $id, String $stranka)
+    {
+        return new DeleteStrankaFeature($stranka)->handle();
     }
 }
