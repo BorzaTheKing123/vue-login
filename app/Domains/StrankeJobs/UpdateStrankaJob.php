@@ -8,19 +8,18 @@ use App\Models\Stranka;
 
 class UpdateStrankaJob
 {
-    public function __construct(private $request, private $info)
+    public function __construct(private $stranka, private $request, private $info)
     {
 
     }
 
     public function handle()
     {
-        $info = Stranka::where('name', $this->request->input('name'))->where('user_id', Auth::id())->first();
+        $info = Stranka::where('name', $this->stranka)->where('user_id', Auth::id())->first();
         if (Auth::id() == $info->user_id)
         {
             $info = $this->request->input();
-
-            Stranka::where('name', $this->request->input('name'))->where('user_id', Auth::id())->save($info);
+            Stranka::where('name', $this->stranka)->where('user_id', Auth::id())->update($info);
             return true;
         }
     }

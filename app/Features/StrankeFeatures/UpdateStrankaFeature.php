@@ -7,7 +7,7 @@ use App\Domains\StrankeJobs\ValidateStrankaJob;
 
 class UpdateStrankaFeature
 {
-    public function __construct(private $request)
+    public function __construct(private $stranka, private $request)
     {
 
     }
@@ -15,6 +15,6 @@ class UpdateStrankaFeature
     public function handle()
     {   
         $info = new ValidateStrankaJob($this->request)->handle();
-        return new UpdateStrankaJob($this->request, $info)->handle();
+        return new UpdateStrankaJob($this->stranka, $this->request, $info)->handle();
     }
 }
