@@ -14,6 +14,9 @@ const goToLogin = () => {
   <div class="options">
     <h1 class="napis">Register</h1>
     <ButtonComponent @click="goToRegister" text="Registriraj se" />
+  </div>
+  <br><br>
+  <div class="options">
     <h1 class="napis">Login</h1>
     <ButtonComponent @click="goToLogin" text="Logiraj se" />
   </div>

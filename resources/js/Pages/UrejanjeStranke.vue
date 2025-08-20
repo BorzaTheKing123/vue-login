@@ -28,6 +28,8 @@ const phone = ref('')
 const dejavnost = ref('')
 const error = ref<string | null>(null)
 const isLoading = ref(true)
+const izpis = ref(false)
+const napaka = ref('') 
 
 // --- Naložimo obstoječo stranko ob mountu ---
 onMounted(() => {
@@ -40,6 +42,10 @@ onMounted(() => {
   } catch (err) {
     console.error("Napaka pri nalaganju stranke:", err)
     error.value = "Ni bilo mogoče naložiti podatkov o stranki."
+    setTimeout(() => {
+  izpis.value = false;
+  napaka.value = '';
+}, 5000); 
   } finally {
     isLoading.value = false
   }
@@ -57,27 +63,44 @@ const updateCustomer = async () => {
       phone: phone.value,
       dejavnost: dejavnost.value,
     })
-    alert('Stranka je bila uspešno posodobljena!')
     window.location.href = `/${props.id}/stranke`
+    alert('Stranka je bila uspešno posodobljena!')
   } catch (err) {
     console.error("Napaka pri posodobitvi:", err)
     error.value = "Prišlo je do napake pri shranjevanju."
+    setTimeout(() => {
+  izpis.value = false;
+  napaka.value = '';
+}, 5000); 
   }
 }
 
 // --- Izbriši stranko ---
-const deleteCustomer = async () => {
-  if (!name.value) return
+const isDeleting = ref(false) // prepreči podvajanje dialoga
 
-  if (confirm(`Ali res želite izbrisati stranko ${name.value}?`)) {
-    try {
-      await axios.delete(`/${props.id}/stranke/${name.value}`)
-      alert('Stranka je bila uspešno izbrisana!')
-      window.location.href = `/${props.id}/stranke`
-    } catch (err) {
-      console.error("Napaka pri brisanju:", err)
-      error.value = "Prišlo je do napake pri brisanju stranke."
-    }
+const deleteCustomer = async () => {
+  if (!name.value || isDeleting.value) return // prepreči večkratni trigger
+
+  isDeleting.value = true // nastavimo pred dialogom
+
+  const confirmed = confirm(`Ali res želite izbrisati stranko ${name.value}?`)
+  if (!confirmed) {
+    isDeleting.value = false // resetiramo, če uporabnik zapre/cancel
+    return
+  }
+
+  try {
+    await axios.delete(`/${props.id}/stranke/${name.value}`)
+    alert('Stranka je bila uspešno izbrisana!') // alert pred redirect
+    window.location.href = `/${props.id}/stranke`
+  } catch (err) {
+    console.error("Napaka pri brisanju:", err)
+    error.value = "Prišlo je do napake pri brisanju stranke."
+    setTimeout(() => {
+      error.value = null
+    }, 5000)
+  } finally {
+    isDeleting.value = false // vedno resetiramo na koncu
   }
 }
 </script>
@@ -100,7 +123,7 @@ const deleteCustomer = async () => {
       </div>
 
       <div class="actions">
-        <ButtonComponent text="Shrani spremembe" @click="updateCustomer" />
+        <ButtonComponent text="Shrani spremembe" @click="updateCustomer" class="update-btn" />
         <ButtonComponent text="Izbriši" @click="deleteCustomer" class="delete-btn" />
       </div>
     </div>
@@ -141,9 +164,23 @@ input {
   display: flex;
   gap: 1rem;
 }
+.update-btn {
+  background: #249236;
+  color: white;
+}
+.update-btn:hover {
+  background-color: #0f6815;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
 
 .delete-btn {
   background: #e53e3e;
   color: white;
+}
+.delete-btn:hover {
+  background-color: #b12929;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 </style>
