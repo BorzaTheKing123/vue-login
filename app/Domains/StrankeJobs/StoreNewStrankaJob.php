@@ -7,27 +7,22 @@ use Illuminate\Support\Facades\Auth;
 
 class StoreNewStrankaJob
 {
-    protected string $strankaName;
-    protected array $strankaData;
-
-    public function __construct(private $request)
+    public function __construct(private $request, private $input)
     {
+
+    }
+
+    private function checkExisting() {
+        //
     }
 
     public function handle()
     {   
         if ($this->request->input('user_id') == Auth::id())
         {
-            $input = $this->request->validate([
-            'name' => ['required', 'string', 'alpha_dash', 'min:2', 'max:255', 'unique:stranke,name'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,username'],
-            'phone' => ['required', 'string', 'min:5'],
-            'dejavnost' => ['required', 'string']
-            ]);
+            $this->input['user_id'] = $this->request->input('user_id');
 
-            $input['user_id'] = $this->request->input('user_id');
-
-            Stranka::create($input);
+            Stranka::create($this->input);
 
             return true;
         }

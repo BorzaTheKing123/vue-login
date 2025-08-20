@@ -27,8 +27,6 @@ class LoginUserJob
             return Auth::id();
         }
  
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+        return 'Neveljavni podatki';
     }
 }
