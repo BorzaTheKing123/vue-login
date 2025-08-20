@@ -15,7 +15,7 @@ Route::get('/register', [RegisterController::class, 'create']);
 Route::post('/register', [RegisterController::class, 'store']);
 
 Route::middleware('auth')->group(function () {
-    Route::get('/{id}/stranke', [SessionController::class, 'index'])->name('stranke.index');
+    Route::get('/{id}/stranke', [StrankeController::class, 'index'])->name('stranke.index');
     Route::get('/{id}/stranke/dodaj', [StrankeController::class, 'create']);
     Route::post('/{id}/stranke/dodaj', [StrankeController::class, 'store']);
     Route::get('/{id}/stranke/{stranka}', [StrankeController::class, 'edit']);

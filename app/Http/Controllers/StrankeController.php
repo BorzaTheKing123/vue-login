@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Features\StrankeFeatures\EditStrankaFeature;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Features\StrankeFeatures\StoreNewStrankaFeature;
-use Illuminate\Support\Facades\DB;
+use App\Features\StrankeFeatures\ShowStrankeFeature;
+use App\Features\StrankeFeatures\UpdateStrankaFeature;
 
 class StrankeController extends Controller
 {
-    public function index()
-    {
-        return "hello";
+    public function index(Int $id)
+    {   
+        //return $id;
+        return new ShowStrankeFeature($id)->handle();
     }
 
     public function create()
@@ -25,12 +28,13 @@ class StrankeController extends Controller
         return new StoreNewStrankaFeature($request)->handle();
     }
 
-    public function edit(Int $id, String $stranka)
+    public function edit(Int $id, String $stranka) // $id je samo zato da sprejme id od userja, ker sta podana 2 parametra
     {   
-        $info = DB::table('stranke')->where('name', $stranka)->first();
-        if (Auth::id() == $info->user_id)
-        {   
-            return Inertia::render('UrejanjeStranke', ['stranka' => $info]);
-        }
+        return new EditStrankaFeature($stranka)->handle();
+    }
+
+    public function update(Request $request)
+    {
+        return new UpdateStrankaFeature($request)->handle();
     }
 }
