@@ -48,8 +48,8 @@ const submitForm = async () => {
 <template>
   <div class="login">
     <h1>Login</h1>
-
-
+  </div>
+  <div class="input">
     <InputComponent v-model="email" namen="email"></InputComponent>
     <InputComponent v-model="password" namen="password"></InputComponent>
     <ButtonComponent text="Logiraj se" @click="submitForm"></ButtonComponent>
@@ -59,10 +59,19 @@ const submitForm = async () => {
  
 <style scoped>
 .login {
+  text-align: center;
   max-width: 300px;
   margin: auto;
   display: flex;
   flex-direction: column;
+}
+.input{
+
+  max-width: 300px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+
 }
 
 button {

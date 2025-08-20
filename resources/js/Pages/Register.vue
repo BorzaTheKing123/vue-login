@@ -32,6 +32,10 @@ const submitForm = async () => {
    // console.error(err)
     napaka.value = "Prišlo je do napake pri registraciji."
     izpis.value = true
+    setTimeout(() => {
+  izpis.value = false;
+  napaka.value = '';
+}, 5000); 
   }
 }
 </script>
@@ -39,6 +43,8 @@ const submitForm = async () => {
 <template>
   <div class="register">
     <h1>Registracija</h1>
+  </div>
+  <div class="input">
     <InputComponent v-model="name" namen="name"></InputComponent>
     <InputComponent v-model="email" namen="email"></InputComponent>
     <InputComponent v-model="password" namen="password"></InputComponent>
@@ -53,12 +59,21 @@ const submitForm = async () => {
   
 <style scoped>
 .register {
+
+  text-align: center;
   max-width: 300px;
   margin: auto;
   display: flex;
   flex-direction: column;
 }
+.input{
 
+  max-width: 300px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+
+}
 button {
   padding: 8px;
   background-color: #4CAF50;

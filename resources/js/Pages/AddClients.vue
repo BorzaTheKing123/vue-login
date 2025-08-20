@@ -16,6 +16,8 @@ const email = ref('')
 const phone = ref('')
 const dejavnost = ref('')
 const error = ref<string | null>(null)
+const izpis = ref(false)
+const napaka = ref('') 
 
 const addCustomer = async () => {
   error.value = null
@@ -32,11 +34,15 @@ const addCustomer = async () => {
       dejavnost: dejavnost.value,
       user_id: props.id
     })
-    alert('Stranka je bila uspešno dodana!')
     window.location.href = `/${props.id}/stranke`;
+    alert('Stranka je bila uspešno dodana!')
   } catch (err) {
     console.error("Napaka pri dodajanju stranke:", err)
     error.value = "Prišlo je do napake pri shranjevanju. Prosimo, preverite podatke."
+    setTimeout(() => {
+  izpis.value = false;
+  napaka.value = '';
+}, 5000); 
   }
 }
 </script>

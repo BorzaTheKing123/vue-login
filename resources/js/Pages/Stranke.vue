@@ -32,8 +32,6 @@ const customers = ref<Customer[]>([])      // Seznam strank z uporabo vmesnika C
 const isLoading = ref(true)               // Status nalaganja
 const error = ref<string | null>(null)    // Napaka, če pride do nje
 
-const isModalVisible = ref(false)         // Pokaže ali skrije modalno okno
-const selectedCustomer = ref<Customer | null>(null) // Hrani podatke o izbrani stranki
 
 // GET request ob mountu
 onMounted(() => {
@@ -96,8 +94,8 @@ const dodajStranko = () => {
       <p>Nalaganje podatkov...</p>
     </div>
 
-    <div class="actions-container">
-      <ButtonComponent text="DODAJ STRANKE" @click="dodajStranko"></ButtonComponent>
+    <div>
+      <ButtonComponent text="DODAJ STRANKE" @click="dodajStranko"  class="actions-container"></ButtonComponent>
     </div>
   </div>
 
@@ -171,6 +169,12 @@ td {
   display: flex;
   justify-content: flex-end;
   margin-top: 2rem;
+}
+.actions-container:hover {
+  background-color: #267640;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+
 }
 
 .clickable-row {
