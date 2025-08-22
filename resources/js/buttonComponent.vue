@@ -1,11 +1,25 @@
 <script setup lang="ts">
-import { defineProps } from 'vue'
+import { defineProps, withDefaults, defineEmits } from 'vue'
 
-const props = defineProps<{ text: string }>()
+// forward the native click event
+const emit = defineEmits<{
+  (e: 'click', event: MouseEvent): void
+}>()
+
+const handleClick = (event: MouseEvent) => {
+  emit('click', event) // emit the native click event
+}
+
+const props = withDefaults(defineProps<{
+  text: string
+  disabled?: boolean
+}>(), {
+  disabled: false
+})
 </script>
 
 <template>
-  <button @click="$emit('click')">{{ props.text }}</button>
+  <button type="button" @click="handleClick" :disabled="disabled">{{ props.text }}</button>
 </template>
 
 <style scoped>
@@ -18,7 +32,11 @@ button {
   cursor: pointer;
   font-size: 16px;
 }
-button:hover {
+button:not(:disabled):hover {
   background-color: #45a049;
+}
+
+button:disabled {
+  background-color: grey;
 }
 </style>

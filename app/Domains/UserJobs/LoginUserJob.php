@@ -23,12 +23,10 @@ class LoginUserJob
         ]);
  
         if (Auth::attempt($credentials)) {
-            $this->request->session()->regenerate(); 
-            return Inertia::render('Stranke');
+            $this->request->session()->regenerate();
+            return Auth::id();
         }
  
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+        return 'Neveljavni podatki';
     }
 }
